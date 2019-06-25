@@ -1,11 +1,21 @@
 {
-	"manifest_version": 1.0,
+	"manifest_version": 2.0,
 	"name": "GDPR compliance plugin",
-	"version": 0.1,
+	"version": "0.1",
 	"description": "A description",
-	"background": {
-		"js": [
-			"cookie_permissions.js"
-		]
-	}
+	"homepage_url": "https://gitlab.com/Dennis_Kalo/cookiemonitor",
+	"content_scripts": [
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"js": [
+				"cookie_permissions.js"
+			]
+		}
+	],
+	"permissions": [
+		"cookies",
+		"<all_urls>"
+	]
 }

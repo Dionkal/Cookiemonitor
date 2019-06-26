@@ -4,16 +4,11 @@
 	"version": "0.1",
 	"description": "A description",
 	"homepage_url": "https://gitlab.com/Dennis_Kalo/cookiemonitor",
-	"content_scripts": [
-		{
-			"matches": [
-				"<all_urls>"
-			],
-			"js": [
-				"cookie_permissions.js"
-			]
-		}
-	],
+	"browser_action": {
+		"default_title": "Cookies",
+		"default_popup": "cookie_list.html",
+		"default_icon": "icons/border-48.png"
+	},
 	"permissions": [
 		"cookies",
 		"<all_urls>"

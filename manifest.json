@@ -6,12 +6,11 @@
 	"homepage_url": "https://gitlab.com/Dennis_Kalo/cookiemonitor",
 	"browser_action": {
 		"browser_style": true,
-		"default_title": "Cookies",
+		"default_title": "List cookies in the active tab",
 		"default_popup": "dist/cookie_list.html",
 		"default_icon": {
-			"16": "icons/arch-linux.png",
-			"32": "icons/arch-linux.png",
-			"48": "icons/arch-linux.png"
+			"19": "icons/arch-linux.png",
+			"38": "icons/arch-linux.png"
 		}
 	},
 	"permissions": [

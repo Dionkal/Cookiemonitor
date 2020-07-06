@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: [
-    // './src/decodeConsentString.js',
+    //'./src/decodeConsentString.js',
     './src/cookie_list.js'
   ],
   output: {

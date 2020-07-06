@@ -10,21 +10,6 @@ function getAndParseConsert(tabs) {
   console.log("Device Access Conset: ", consentData.getPurposesAllowed(1));
   console.log("Personalize Advertizing Conset: ", consentData.getPurposesAllowed(1));
   
-  let tab = tabs.pop();
-
-  //get all cookies in the domain
-  var gettingAllCookies = browser.cookies.getAll({url: tab.url});
-
-  gettingAllCookies.then((cookies) => {
-    if (cookies.length > 0) {
-      console.log("Print All cookies");
-      for (let cookie of cookies) {
-        console.log("cookie: ", cookie);
-      }
-    }
-  });
-  // var gettingAllCookies = browser.cookies.get({name: 'eupubconsent'});
-  console.log("END");
 };
 
 function getActiveTab() {

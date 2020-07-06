@@ -1,6 +1,6 @@
 # ignore swap files
- *.swp
- *.swo
+*.swp
+*.swo
 
 # ignore node modules
 node_modules/*

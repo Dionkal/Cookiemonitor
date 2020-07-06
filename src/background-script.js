@@ -1,5 +1,5 @@
 function handleMessage(request, sender, sendResponse){
-  console.log("received");
+  console.log("received", request);
   console.log("Message received from content script" + request.url);
   sendResponse({response: 'response'});
 }

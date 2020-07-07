@@ -2,7 +2,7 @@
 window.addEventListener("click", notifyBackgroundScript);
 console.log('Event handler added');
 
-function notifyBackgroundScript(e){
+async function notifyBackgroundScript(e){
   let url = window.location.href; 
   console.log("sending url: "+ url);
   

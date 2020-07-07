@@ -8,13 +8,12 @@ console.log('Event handler added');
 
 async function notifyBackgroundScript(e){
   let url = window.location.href; 
-  console.log("sending url: "+ url);
+  console.log("Sending url to background-script: "+ url);
   
   var message;
   try {
     message = await browser.runtime.sendMessage({ url });
+    console.log('Received response from the background-script: ', message);
   } catch(e){ handleError(e); };
 
-  console.log('Response: ', message);
-  // TODO: get cookie results
 }

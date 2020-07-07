@@ -1,3 +1,7 @@
+'use strict';
+
+const { handleError } = require('./utils');
+
 // Main execution - attach event handler
 window.addEventListener("click", notifyBackgroundScript);
 console.log('Event handler added');
@@ -13,10 +17,4 @@ async function notifyBackgroundScript(e){
 
   console.log('Response: ', message);
   // TODO: get cookie results
-}
-
-
-// Utils
-function handleError(error) {
-  console.log('Error', error);
 }

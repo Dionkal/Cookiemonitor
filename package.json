@@ -4,7 +4,9 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx webpack --config webpack.config.js"
+    "build:content": "npx webpack --config content-script.webpack.config.js --mode=development",
+    "build:background": "npx webpack --config background-script.webpack.config.js --mode=development",
+    "build": "npm run build:content && npm run build:background"
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,6 @@
   "homepage": "https://gitlab.com/Dennis_Kalo/cookiemonitor#readme",
   "devDependencies": {
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.12"
   }
 }

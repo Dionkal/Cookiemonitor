@@ -4,12 +4,13 @@
 	"version": "0.3",
 	"description": "A description",
 	"homepage_url": "https://gitlab.com/Dennis_Kalo/cookiemonitor",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';",
   "background": {
-    "scripts": ["src/background-script.js"]
+    "scripts": ["dist/background_script.js"]
   },
   "content_scripts": [{
     "matches": ["<all_urls>"],
-    "js": ["src/content-script.js"]
+    "js": ["dist/content_script.js"]
   }],
 	"permissions": [
 		"cookies",

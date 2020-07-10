@@ -12,7 +12,7 @@ async function handleMessage(request, sender, sendResponse){
     const { url } = request;
     cookies = await browser.cookies.getAll({ url });
     // 2: decode consent cookies
-    var quantcast_cookies = getQuantcastConsent(cookies); 
+    var quantcast_cookies = await getQuantcastConsent(cookies); 
     // 3 Get consent types
     // TODO; get consent types
     // 4 Send back consent
@@ -21,13 +21,17 @@ async function handleMessage(request, sender, sendResponse){
   }catch(e) { handleError(e); }
 }
 
-function getQuantcastConsent(cookies){
+async function getQuantcastConsent(cookies){
   var quant_cookies = getQuantcastCookies(cookies);
+  const { purposes }  = await getVendorList();
+  console.log('Purposes: ', purposes);
 
   quant_cookies.forEach(cookie => {
-    cookie.consent_data = new ConsentString(cookie.value); 
-    console.log('allowed purposes: ',cookie.consent_data.getPurposesAllowed(1));
+    const consent_data = new ConsentString(cookie.value); 
+    quant_cookies.allowedPurposes = purposes.filter(purpose => 
+      consent_data.allowedPurposeIds.includes(purpose.id));
   });
+
   return quant_cookies;
 }
 
@@ -44,14 +48,11 @@ function getQuantcastCookies(cookies){
 async function getVendorList() {
   let vendorList;
   try{
-   vendorList= await fetch('https://vendorlist.consensu.org/vendorinfo.json');
+   vendorList= await fetch('https://vendorlist.consensu.org/vendorlist.json');
   }catch(e) { handleError(e); }
 
-  //vendorList = JSON.parse(vendorList);
-  console.log('vendorlist: ', vendorList );
+  return vendorList.json();
 }
-
 
 browser.runtime.onMessage.addListener(handleMessage);
 console.log('Background script loaded');
-getVendorList();

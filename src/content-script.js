@@ -13,18 +13,20 @@ async function notifyBackgroundScript(e){
   var message;
   try {
     message = await browser.runtime.sendMessage({ url });
-    //console.log('Received response from the background-script: ', message);
+    
+    const {quantcast_cookies} = message;
+    if(quantcast_cookies){
+
+      console.log('==================Allowed purposes==================');
+      quantcast_cookies.allowedPurposes.forEach(element => {
+        console.log(`${element.id} ${element.name}: ${element.description}`);
+      });
+    }
+    // console.log('Received response from the background-script: ', quantcast_cookies);
     // Print Data
     //parseConsentData(message.quantcast_cookies[0].consent_data);
     //parseConsentData(message.quantcast_cookies[1].consent_data);
   } catch(e){ handleError(e); };
 
   
-}
-
-
-function parseConsentData(consetData) {
-  console.log('consent data: ', consetData);
-  console.log('Device access consent: ', consetData.getPurposesAllowed(1));
-  console.log('Personalize advertizing consent: ', consetData.getPurposesAllowed(2));
 }

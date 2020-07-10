@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build:content": "npx webpack --config content-script.webpack.config.js --mode=development",
     "build:background": "npx webpack --config background-script.webpack.config.js --mode=development",
     "build": "npm run build:content && npm run build:background"

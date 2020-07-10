@@ -13,7 +13,18 @@ async function notifyBackgroundScript(e){
   var message;
   try {
     message = await browser.runtime.sendMessage({ url });
-    console.log('Received response from the background-script: ', message);
+    //console.log('Received response from the background-script: ', message);
+    // Print Data
+    //parseConsentData(message.quantcast_cookies[0].consent_data);
+    //parseConsentData(message.quantcast_cookies[1].consent_data);
   } catch(e){ handleError(e); };
 
+  
+}
+
+
+function parseConsentData(consetData) {
+  console.log('consent data: ', consetData);
+  console.log('Device access consent: ', consetData.getPurposesAllowed(1));
+  console.log('Personalize advertizing consent: ', consetData.getPurposesAllowed(2));
 }

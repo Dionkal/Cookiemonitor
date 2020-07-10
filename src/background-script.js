@@ -13,9 +13,7 @@ async function handleMessage(request, sender, sendResponse){
     cookies = await browser.cookies.getAll({ url });
     // 2: decode consent cookies
     var quantcast_cookies = await getQuantcastConsent(cookies); 
-    // 3 Get consent types
-    // TODO; get consent types
-    // 4 Send back consent
+    // 3: Send back consent
     console.log('quantcast cookies: ', quantcast_cookies);
     return Promise.resolve({ quantcast_cookies });
   }catch(e) { handleError(e); }

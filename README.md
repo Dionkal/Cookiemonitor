@@ -19,4 +19,5 @@
 
 4. <b> Load the extention to the browser </b>
     
-    // TODO: Add pictures to show how to load extentions using Firefox
+    Go to ``` about:debugging ``` in firefox and click ``` Load temporary Add-on ```.<br>
+    Select and load the <b>manifest.json</b> file of the project.

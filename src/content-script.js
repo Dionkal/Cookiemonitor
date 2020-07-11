@@ -22,7 +22,11 @@ async function notifyBackgroundScript(e){
         console.log(`${element.id} ${element.name}: ${element.description}`);
       });
       console.log('==================Allowed Vendors==================');
-      console.log('message: ', message);
+      quantcast_cookies.allowedVendors.forEach(element => {
+        console.log(`${element.id} ${element.name}: ${element.policyUrl}`);
+        console.log(`\tPurposes: ${element.purposeIds}`);
+        // console.log(`\tFeatures: ${element.featureIds}`);
+      });
 
     }
   } catch(e){ handleError(e); };

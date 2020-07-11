@@ -21,12 +21,9 @@ async function notifyBackgroundScript(e){
       quantcast_cookies.allowedPurposes.forEach(element => {
         console.log(`${element.id} ${element.name}: ${element.description}`);
       });
-    }
-    // console.log('Received response from the background-script: ', quantcast_cookies);
-    // Print Data
-    //parseConsentData(message.quantcast_cookies[0].consent_data);
-    //parseConsentData(message.quantcast_cookies[1].consent_data);
-  } catch(e){ handleError(e); };
+      console.log('==================Allowed Vendors==================');
+      console.log('message: ', message);
 
-  
+    }
+  } catch(e){ handleError(e); };
 }

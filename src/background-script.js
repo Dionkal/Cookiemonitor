@@ -5,7 +5,6 @@ const { handleError } = require('./utils');
 
 async function handleMessage(request, sender, sendResponse){
   console.log("Message received from content script: " + request.url);
-  // TODO: 
   var cookies;
   try {
     // 1: Get cookies from url
@@ -21,13 +20,26 @@ async function handleMessage(request, sender, sendResponse){
 
 async function getQuantcastConsent(cookies){
   var quant_cookies = getQuantcastCookies(cookies);
-  const { purposes }  = await getVendorList();
-  console.log('Purposes: ', purposes);
+  const { purposes, features, vendors }  = await getVendorList();
 
   quant_cookies.forEach(cookie => {
-    const consent_data = new ConsentString(cookie.value); 
+    const { 
+      allowedPurposeIds,
+      allowedVendorIds
+    } = new ConsentString(cookie.value);
+
     quant_cookies.allowedPurposes = purposes.filter(purpose => 
-      consent_data.allowedPurposeIds.includes(purpose.id));
+      allowedPurposeIds.includes(purpose.id)
+    );
+
+    quant_cookies.allowedVendors = vendors.filter(vendor => 
+      allowedVendorIds.includes(vendor.id)
+    );
+
+    // const allowedPurposes = allowedPurposeIds.map( purpose => {return purpose.id; });
+    // TODO: Combine the purposes for each vendor from vendorlist with the allowedPurposes
+
+    quant_cookies.features = features;
   });
 
   return quant_cookies;

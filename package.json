@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+ssh://git@gitlab.com/Dennis_Kalo/cookiemonitor.git"
   },
-  "author": "",
+  "author": "Dionkal",
   "license": "ISC",
   "bugs": {
     "url": "https://gitlab.com/Dennis_Kalo/cookiemonitor/issues"

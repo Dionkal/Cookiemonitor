@@ -13,7 +13,6 @@ async function handleMessage(request, sender, sendResponse){
     // 2: decode consent cookies
     var quantcast_cookies = await getQuantcastConsent(cookies); 
     // 3: Send back consent
-    console.log('quantcast cookies: ', quantcast_cookies);
     return Promise.resolve({ quantcast_cookies });
   }catch(e) { handleError(e); }
 }
@@ -37,14 +36,12 @@ async function getQuantcastConsent(cookies){
     );
 
     // const allowedPurposes = allowedPurposeIds.map( purpose => {return purpose.id; });
-    // TODO: Combine the purposes for each vendor from vendorlist with the allowedPurposes
 
     quant_cookies.features = features;
   });
 
   return quant_cookies;
 }
-
 
 function getQuantcastCookies(cookies){
   const quantcast_cookies = [
@@ -54,7 +51,7 @@ function getQuantcastCookies(cookies){
   return cookies.filter(cookie => quantcast_cookies.includes(cookie.name));
 }
 
-
+// TODO: download the correct version of the vendorlist
 async function getVendorList() {
   let vendorList;
   try{

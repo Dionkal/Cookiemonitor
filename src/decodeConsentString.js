@@ -3,13 +3,10 @@
 const { ConsentString } = require('consent-string');
 
 function getAndParseConsert() { 
-  const consentData = new ConsentString('BO2NPQZO2NPQZAKAiAENAAAAwAAAAA');
+  const consentData = new ConsentString('BO3UVS4O3UVS4AKAjAENAAAAAAAAAA');
   
   console.log(consentData);
-
-  console.log("Device Access Conset: ", consentData.getPurposesAllowed(1));
-  console.log("Personalize Advertizing Conset: ", consentData.getPurposesAllowed(1));
-  
 };
 
 getAndParseConsert();
+__cmp('getPublisherConsents',[], (data)=> {console.log(data)});

@@ -1,49 +1,41 @@
 'use strict';
 
-const { handleError } = require('./utils');
+const { handleError, printConsentData } = require('./utils');
 
 // Main execution - attach event handler
 window.addEventListener("click", notifyBackgroundScript);
 console.log('Event handler added');
 
 async function notifyBackgroundScript(e){
-  let url = window.location.href; 
-  console.log('window frames: ', window.frames);
+  let url = window.location.href;
   console.log("Sending url to background-script: "+ url);
   
   var message;
   try {
-    message = await browser.runtime.sendMessage({ url });
+    const urls = getURLSources();
+    urls.push(window.location.href);
+    message = await browser.runtime.sendMessage({ 
+      urls,
+      first_party_domain: window.location.href
+    });
     
     const {quantcast_cookies} = message;
-    if(quantcast_cookies){
-
-      console.log('==================Allowed purposes==================');
-      if(quantcast_cookies.allowedPurposes && Array.isArray(quantcast_cookies.allowedPurposes)){
-        quantcast_cookies.allowedPurposes.forEach(element => {
-          console.log(`${element.id} ${element.name}: ${element.description}`);
-        });
-      }
-
-      console.log('==================Allowed features==================');
-      console.log('Please note that the user cannot consent to individual features as they may involve multiple purposes');
-      if(quantcast_cookies.features && Array.isArray(quantcast_cookies.features)){
-        quantcast_cookies.features.forEach(feature => {
-          console.log(`${feature.id}: ${feature.name}:`);
-          console.log(feature.description);
-        });
-      }
-
-      console.log('==================Allowed Vendors==================');
-      if(quantcast_cookies.allowedVendors && Array.isArray(quantcast_cookies.allowedVendors) ){
-        quantcast_cookies.allowedVendors.forEach(element => {
-          console.log(`${element.id}: ${element.name}: ${element.policyUrl}`);
-          console.log(`\tPurposes: ${element.purposeIds}`);
-          console.log(`\tFeatures: ${element.featureIds}`);
-        });
-      }
-
-      // TODO: Get Publishers consent
-    }
+    
   } catch(e){ handleError(e); };
+}
+
+function getURLSources(){
+  const iframe_tags = document.getElementsByTagName("iframe");
+  const urls = [];
+  
+  for (var i = 0; i < iframe_tags.length; i++) { 
+    // console.log('iframe ', i, ': ',iframe_tags[i]);
+    const src = iframe_tags[i].src;
+    // console.log('iframe src: ', src );
+    
+    if(src) {
+      urls.push(src);
+    }
+  }
+  return urls;
 }

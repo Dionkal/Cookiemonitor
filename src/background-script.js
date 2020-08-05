@@ -5,15 +5,21 @@ const { handleError } = require('./utils');
 
 async function handleMessage(request, sender, sendResponse){
   console.log("Message received from content script: " + request.url);
-  var cookies;
+  const cookies = [];
   try {
     // 1: Get cookies from url
-    const { url } = request;
-    cookies = await browser.cookies.getAll({ url });
+    const { urls, first_party_domain } = request;
+
+    for(let url of urls){
+      const frame_cookies = await browser.cookies.getAll({ url });
+      cookies.push(...frame_cookies);
+    }
+    console.log('All cookies: ', cookies);
+    //TODO: discard duplicate cookies
     // 2: decode consent cookies
-    var quantcast_cookies = await getQuantcastConsent(cookies); 
+    // var quantcast_cookies = await getQuantcastConsent(cookies); 
     // 3: Send back consent
-    return Promise.resolve({ quantcast_cookies });
+    return Promise.resolve({ cookies });
   }catch(e) { handleError(e); }
 }
 

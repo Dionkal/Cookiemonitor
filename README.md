@@ -3,6 +3,12 @@
 ## Prerequisites: ##
 - NodeJS & npm: ```https://www.npmjs.com/get-npm ```
 
+- Disable same origin policy         
+
+        Open the Firefox config by navigating to about:config
+        Set the option security.fileuri.strict_origin_policy to false
+        
+  <i><b>Note:</b> This feature will make firefox <b>unsecure</b>. Do it at your own risk.</i>
 ## Installation: ##
 1. <b> Download the repo </b>
 

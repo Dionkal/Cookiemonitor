@@ -5,7 +5,8 @@
   "scripts": {
     "build:content": "npx webpack --config webpack_configs/content-script.webpack.config.js --mode=development",
     "build:background": "npx webpack --config webpack_configs/background-script.webpack.config.js --mode=development",
-    "build": "npm run build:content && npm run build:background"
+    "build:page": "npx webpack --config webpack_configs/page-script.webpack.config.js --mode=development",
+    "build": "npm run build:content && npm run build:background && npm run build:page"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "consent-string": "^1.5.2"
+    "consent-string": "^1.5.2",
+    "debundle": "^0.5.4"
   }
 }

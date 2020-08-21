@@ -6,7 +6,7 @@ function moveBackADir(filepath){
 
 module.exports = {
   entry: {  
-    background_script: './src/getCMPObject.js'
+    getCMPObject: './src/getCMPObject.js'
   },
   output: {
     filename: '[name].js',

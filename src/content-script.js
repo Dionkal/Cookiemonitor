@@ -16,10 +16,23 @@ window.addEventListener("message", function(event) {
   if (event.source == window &&
       event.data &&
       event.data.direction == "cookie_monitor_page_script") {
+
+    const { 
+      tcData: consentData,
+      gvl: vendorList
+    } = event.data.message;
     //console.log('Content script recieved message: ', event.data.message);
     // printConsent(event.data.message);
+    
+
     const urls = getURLSources();
     urls.forEach((url, index) => console.log(index, ': ', url));
+    notifyBackgroundScript({
+      urls,
+      consentData,
+      vendorList,
+      firstPartyDomain: window.location.href
+    });
   }
 });
 
@@ -64,5 +77,19 @@ function getURLSources(){
 
   // add the current location
   urls.push(window.location.href);
-  return urls;
+  return urls; 
+}
+
+
+
+async function notifyBackgroundScript(payload){
+  
+  let message;
+  try {
+    message = await browser.runtime.sendMessage(payload);
+    console.log('Response recieved from background script: ', message);
+
+  } catch(e){ 
+    handleError(e); 
+  };
 }

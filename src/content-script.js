@@ -1,6 +1,9 @@
 'use strict';
 
-const { handleError, printConsentData } = require('./utils');
+const { 
+  handleError,
+  extractDomainFromUrl 
+} = require('./utils');
 
 function injectScript(file, node) {
   var th = document.getElementsByTagName(node)[0];
@@ -26,12 +29,12 @@ window.addEventListener("message", function(event) {
     
 
     const urls = getURLSources();
-    urls.forEach((url, index) => console.log(index, ': ', url));
+    urls.forEach((url, index) => console.debug(index, ': ', url));
     notifyBackgroundScript({
       urls,
       consentData,
       vendorList,
-      firstPartyDomain: window.location.href
+      firstPartyDomain: getFirstPartyDomain()
     });
   }
 });
@@ -68,19 +71,21 @@ function getURLSources(){
   
   for (var i = 0; i < iframe_tags.length; i++) { 
     const src = iframe_tags[i].src;
-    // TODO: get only the domain from the source
 
     if(src) {
       urls.push(src);
     }
   }
 
-  // add the current location
+  // add first party domain
   urls.push(window.location.href);
   return urls; 
 }
 
-
+function getFirstPartyDomain() {
+  const url = extractDomainFromUrl(window.location.href);
+  return url.substring(3);
+}
 
 async function notifyBackgroundScript(payload){
   

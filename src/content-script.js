@@ -17,12 +17,13 @@ window.addEventListener("message", function(event) {
       event.data &&
       event.data.direction == "cookie_monitor_page_script") {
     //console.log('Content script recieved message: ', event.data.message);
-    printConsent(event.data.message);
+    // printConsent(event.data.message);
+    const urls = getURLSources();
+    urls.forEach((url, index) => console.log(index, ': ', url));
   }
 });
 
 function printConsent({tcData, gvl}){
-
   // Print Global Vendor List Data
   printGVLObject(gvl.features, 'Features');
   printGVLObject(gvl.specialFeatures, 'Special Features');
@@ -37,7 +38,6 @@ function printConsent({tcData, gvl}){
 }
 
 function printGVLObject(obj, name){
-  
   console.log(`=================${name}=================`);
  
   for(let key in obj){
@@ -54,13 +54,15 @@ function getURLSources(){
   const urls = [];
   
   for (var i = 0; i < iframe_tags.length; i++) { 
-    // console.log('iframe ', i, ': ',iframe_tags[i]);
     const src = iframe_tags[i].src;
-    // console.log('iframe src: ', src );
-    
+    // TODO: get only the domain from the source
+
     if(src) {
       urls.push(src);
     }
   }
+
+  // add the current location
+  urls.push(window.location.href);
   return urls;
 }

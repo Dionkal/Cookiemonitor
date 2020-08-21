@@ -24,12 +24,10 @@ window.addEventListener("message", function(event) {
       tcData: consentData,
       gvl: vendorList
     } = event.data.message;
-    //console.log('Content script recieved message: ', event.data.message);
     // printConsent(event.data.message);
     
 
     const urls = getURLSources();
-    urls.forEach((url, index) => console.debug(index, ': ', url));
     notifyBackgroundScript({
       urls,
       consentData,

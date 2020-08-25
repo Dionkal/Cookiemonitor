@@ -1,5 +1,6 @@
 'use strict';
 
+const getVendorName = require('./lookup'); 
 const { 
   handleError,
   isFirstParyDomain
@@ -29,6 +30,8 @@ async function handleMessage(request, sender, sendResponse){
         }
       });
     }
+    
+    checkThridPartyConsent(third_party_cookies);
 
     return Promise.resolve({ first_party_cookies, third_party_cookies });
   }catch(e) { 
@@ -41,6 +44,16 @@ function addCookie(cookie, cookieList){
   if(!already_inserted){
     cookieList.push(cookie);
   }
+}
+
+function checkThridPartyConsent(third_party_cookies){
+  if(!typeof array){
+    return;
+  }
+
+  third_party_cookies.forEach(async cookie => {
+    console.log('Third party cookie domain: ', await getVendorName(cookie.domain));
+  });
 }
 
 browser.runtime.onMessage.addListener(handleMessage);

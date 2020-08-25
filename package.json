@@ -23,7 +23,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "consent-string": "^1.5.2",
-    "debundle": "^0.5.4"
+    "eldardap": "^1.0.1",
+    "whois": "^2.13.0"
   }
 }

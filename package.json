@@ -22,8 +22,5 @@
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
   },
-  "dependencies": {
-    "eldardap": "^1.0.1",
-    "whois": "^2.13.0"
-  }
+  "dependencies": {}
 }

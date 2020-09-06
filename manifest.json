@@ -7,7 +7,7 @@
 	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';",
 	"background": {
 		"scripts": [
-			"dist/background_script.js"
+			"dist/background_script_bundle.js"
 		]
 	},
 	"content_scripts": [
@@ -16,12 +16,12 @@
 				"<all_urls>"
 			],
 			"js": [
-				"dist/content_script.js"
+				"dist/content_script_bundle.js"
 			]
 		}
 	],
 	"web_accessible_resources": [
-		"dist/getCMPObject.js"
+		"dist/page_script_bundle.js"
 	],
 	"permissions": [
 		"cookies",

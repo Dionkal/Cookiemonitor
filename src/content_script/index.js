@@ -1,7 +1,6 @@
 'use strict';
 
 const { 
-  handleError,
   extractDomainFromUrl 
 } = require('./utils');
 
@@ -12,7 +11,7 @@ function injectScript(file, node) {
   s.setAttribute('src', file);
   th.appendChild(s);
 }
-injectScript( browser.runtime.getURL('/src/getCMPObject.js'), 'body');
+injectScript( browser.runtime.getURL('/dist/page_script_bundle.js'), 'body');
 
 //  Listen for data from page script
 window.addEventListener("message", function(event) {
@@ -93,6 +92,8 @@ async function notifyBackgroundScript(payload){
     console.log('Response recieved from background script: ', message);
 
   } catch(e){ 
-    handleError(e); 
+    console.error('Error: ', e); 
   };
 }
+
+console.log('Content script loaded');

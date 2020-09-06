@@ -1,8 +1,6 @@
 'use strict';
 
-const getVendorName = require('./lookup'); 
 const { 
-  handleError,
   isFirstParyDomain
  } = require('./utils');
 
@@ -35,7 +33,7 @@ async function handleMessage(request, sender, sendResponse){
 
     return Promise.resolve({ first_party_cookies, third_party_cookies });
   }catch(e) { 
-    handleError(e); 
+    console.error('Error', e); 
   }
 }
 
@@ -52,7 +50,8 @@ function checkThridPartyConsent(third_party_cookies){
   }
 
   third_party_cookies.forEach(async cookie => {
-    console.log('Third party cookie domain: ', await getVendorName(cookie.domain));
+    // TODO: whois lookup for the regristrant domain
+    // console.log('Third party cookie domain: ', cookie.domain);
   });
 }
 

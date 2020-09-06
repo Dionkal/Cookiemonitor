@@ -1,12 +1,9 @@
 {
   "name": "cookiemonitor",
   "version": "1.0.0",
-  "description": "",
+  "description": "My thesis",
   "scripts": {
-    "build:content": "npx webpack --config webpack_configs/content-script.webpack.config.js --mode=development",
-    "build:background": "npx webpack --config webpack_configs/background-script.webpack.config.js --mode=development",
-    "build:page": "npx webpack --config webpack_configs/page-script.webpack.config.js --mode=development",
-    "build": "npm run build:content && npm run build:background && npm run build:page"
+    "build": "npx webpack --config webpack.config.js --mode=development"
   },
   "repository": {
     "type": "git",

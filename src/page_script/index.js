@@ -36,4 +36,5 @@ function getCmpData () {
 
 }
 
+console.log('Page script loaded');
 getCmpData();

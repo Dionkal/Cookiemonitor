@@ -16,8 +16,11 @@
   },
   "homepage": "https://gitlab.com/Dennis_Kalo/cookiemonitor#readme",
   "devDependencies": {
+    "source-map-loader": "^1.1.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
   },
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^0.20.0"
+  }
 }

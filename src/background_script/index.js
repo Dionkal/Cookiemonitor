@@ -1,8 +1,11 @@
 'use strict';
 
 const { 
-  isFirstParyDomain
+  isFirstParyDomain,
+  findDomainRegistrant
  } = require('./utils');
+
+const checkThirdPartyConsent = require('./validateConsent');
 
 async function handleMessage(request, sender, sendResponse){
   const { 
@@ -18,7 +21,6 @@ async function handleMessage(request, sender, sendResponse){
   try {
     for(let url of urls){
       const frame_cookies = await browser.cookies.getAll({ url });
-
       frame_cookies.forEach(cookie => {
         if(isFirstParyDomain(cookie.domain, firstPartyDomain)){
           addCookie(cookie, first_party_cookies);
@@ -29,11 +31,12 @@ async function handleMessage(request, sender, sendResponse){
       });
     }
     
-    checkThridPartyConsent(third_party_cookies);
-
-    return Promise.resolve({ first_party_cookies, third_party_cookies });
+    const vendorNames = await findVendorNames(third_party_cookies); 
+    const third_party_violators = checkThirdPartyConsent(vendorNames, consentData, vendorList);
+    
+    return Promise.resolve({ first_party_cookies, third_party_cookies, third_party_violators });
   }catch(e) { 
-    console.error('Error', e); 
+    console.error('Cookie Monitor: Error', e); 
   }
 }
 
@@ -44,16 +47,22 @@ function addCookie(cookie, cookieList){
   }
 }
 
-function checkThridPartyConsent(third_party_cookies){
-  if(!typeof array){
-    return;
-  }
+async function findVendorNames(third_party_cookies){
+  let third_party_vendors = [];
 
-  third_party_cookies.forEach(async cookie => {
-    // TODO: whois lookup for the regristrant domain
-    // console.log('Third party cookie domain: ', cookie.domain);
-  });
+  for (const cookie of third_party_cookies){
+    console.log('Cookie: ', cookie);
+    const response = await findDomainRegistrant(cookie.domain);
+    if(!response || response.status >= 400 ){
+      cookie.vendor = null;
+    }else {
+      cookie.vendor = response.data;
+      third_party_vendors.push(response.data);
+    }
+  }
+ 
+  return third_party_vendors;
 }
 
 browser.runtime.onMessage.addListener(handleMessage);
-console.log('Background script loaded');
+console.log('Cookie Monitor: Background script loaded');

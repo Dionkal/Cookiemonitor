@@ -5,6 +5,7 @@ function checkThirdPartyConsent(vendorNames = [], consentData, vendorList){
 
     vendorNames.forEach( name => {
         const vendor_data = getThirdPartyVendorsData(vendorList.vendors, name);
+        console.log('Vendor: ', name, vendor_data);
         if(vendor_data){
             // 1. Vendor must be explicitily allowed
             if (!consentData.vendor.consents[vendor_data.id]) {

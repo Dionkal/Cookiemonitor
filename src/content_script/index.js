@@ -86,10 +86,12 @@ function getFirstPartyDomain() {
 
 async function notifyBackgroundScript(payload){
   
-  let message;
   try {
-    message = await browser.runtime.sendMessage(payload);
-    console.log('Response recieved from background script: ', message);
+    const {third_party_violators} = await browser.runtime.sendMessage(payload);
+    // console.log('Response recieved from background script');
+    if(third_party_violators && Array.isArray(third_party_violators)){
+      third_party_violators.forEach(violator => console.log('Violator: ',violator))
+    }
 
   } catch(e){ 
     console.error('Error: ', e); 

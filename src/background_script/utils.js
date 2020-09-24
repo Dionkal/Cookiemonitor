@@ -23,7 +23,31 @@ async function findDomainRegistrant(domain){
   }
 }
 
+async function isNecessary(cookieName){
+  try{
+    const response = await axios({
+      method: 'get',
+      url: `https://cookiepedia.co.uk/cookies/${cookieName}`
+    });
+    
+    if(response.status === 200) {
+      const split_data = response.data.split(/[\r\n]/);
+      const data_line = split_data.find(element => element.includes('The main purpose of this cookie is:'));
+      
+      if(!data_line) {
+        return false;
+      }
+      return data_line.includes('Strictly Necessary');
+    }
+    return false;
+
+  }catch(e){
+    console.error('Error while searching cookiepedia for ', cookieName);
+  }
+}
+
 module.exports = {
   isFirstParyDomain,
-  findDomainRegistrant
+  findDomainRegistrant,
+  isNecessary
 };

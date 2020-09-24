@@ -87,11 +87,19 @@ function getFirstPartyDomain() {
 async function notifyBackgroundScript(payload){
   
   try {
-    const {third_party_violators} = await browser.runtime.sendMessage(payload);
-    // console.log('Response recieved from background script');
-    if(third_party_violators && Array.isArray(third_party_violators)){
-      third_party_violators.forEach(violator => console.log('Violator: ',violator))
-    }
+    const {
+      third_party_violators,
+      first_party_violators
+    } = await browser.runtime.sendMessage(payload);
+    console.log('First party cookie violators: ', first_party_violators);
+    console.log('Third party cookie violators: ', third_party_violators);
+    // if(third_party_violators && Array.isArray(third_party_violators)){
+    //   third_party_violators.forEach(violator => console.log('Violator: ',violator))
+    // }
+
+    // if(first_party_violators && Array.isArray(first_party_violators)){
+    //   first_party_violators.forEach(violator => console.log('First party cookie violator: ',violator))
+    // }
 
   } catch(e){ 
     console.error('Error: ', e); 

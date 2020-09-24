@@ -5,7 +5,10 @@ const {
   findDomainRegistrant
  } = require('./utils');
 
-const checkThirdPartyConsent = require('./validateConsent');
+const {
+  checkThirdPartyConsent,
+  checkFirstPartyConsent
+} = require('./validateConsent');
 
 async function handleMessage(request, sender, sendResponse){
   const { 
@@ -31,10 +34,17 @@ async function handleMessage(request, sender, sendResponse){
       });
     }
     
+    // Check third party cookies
+    console.log('Checking third party cookies');
     const vendorNames = await findVendorNames(third_party_cookies); 
     const third_party_violators = checkThirdPartyConsent(vendorNames, consentData, vendorList);
     
-    return Promise.resolve({ first_party_cookies, third_party_cookies, third_party_violators });
+    // Check first party cookies
+    console.log('Checking first party cookies');
+    const first_party_violators = await checkFirstPartyConsent(first_party_cookies, consentData);
+
+    console.log('Sending response to content script');
+    return Promise.resolve({ first_party_cookies, third_party_cookies, third_party_violators, first_party_violators });
   }catch(e) { 
     console.error('Cookie Monitor: Error', e); 
   }

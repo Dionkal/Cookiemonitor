@@ -22,6 +22,7 @@ async function handleMessage(request, sender, sendResponse){
   const third_party_cookies = [];
 
   try {
+    console.log(`==========Examining host: ${firstPartyDomain}==========`)
     for(let url of urls){
       const frame_cookies = await browser.cookies.getAll({ url });
       frame_cookies.forEach(cookie => {
@@ -37,6 +38,7 @@ async function handleMessage(request, sender, sendResponse){
     // Check third party cookies
     console.log('Checking third party cookies');
     const vendorNames = await findVendorNames(third_party_cookies); 
+    console.log('Vendor names: ', vendorNames);
     const third_party_violators = checkThirdPartyConsent(vendorNames, consentData, vendorList);
     
     // Check first party cookies

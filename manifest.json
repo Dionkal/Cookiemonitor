@@ -20,6 +20,10 @@
 			]
 		}
 	],
+	"browser_action": {
+		"default_popup": "/dist/index.html",
+    "default_title": "Cookiemonitor"
+	},
 	"web_accessible_resources": [
 		"dist/page_script_bundle.js"
 	],
